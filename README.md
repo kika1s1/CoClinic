@@ -49,3 +49,6 @@
 
 
 
+
+## Prototype link
+- **Figma Design**: [Figma Design](https://www.figma.com/design/rfQw6dqtZmoA0PmTSwmUjH/CoClinic?node-id=0-1&t=HeFqUf8QsQ6nlb0g-1)
