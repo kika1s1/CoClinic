@@ -1,0 +1,15 @@
+{
+  "name": "coclinic",
+  "version": "1.0.0",
+  "description": "An innovative telehealth platform designed to provide seamless healthcare services through live consultations and interactive AI support.",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "Telehealth",
+    "coclinic"
+  ],
+  "author": "tammirat.kebede@gmail.com",
+  "license": "ISC"
+}
