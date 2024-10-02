@@ -52,3 +52,6 @@
 
 ## Prototype link
 - **Figma Design**: [Figma Design](https://www.figma.com/design/rfQw6dqtZmoA0PmTSwmUjH/CoClinic?node-id=0-1&t=HeFqUf8QsQ6nlb0g-1)
+
+## Prototype Link
+- **Postman Docummentation**: [Postman Documentation](https://documenter.getpostman.com/view/36018169/2sAXxJjbLa)
