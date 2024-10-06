@@ -1,20 +1,4 @@
-import { useState } from "react";
-import {
-  Box,
-  TextField,
-  Button,
-  Paper,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { useMediaQuery } from "@mui/material";
-// import { sendMessage } from './api';
-import { green, grey } from "@mui/material/colors";
-import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
-// import ReactMarkdown from 'react-markdown';
-// import remarkGfm from 'remark-gfm';
+import { useState, useEffect, useRef } from "react";
 
 const initialSuggestionPrompts = [
   "Hi! I am feeling dizzy 😊",
@@ -23,171 +7,137 @@ const initialSuggestionPrompts = [
 ];
 
 const AIChat = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => {
+    const savedMessages = localStorage.getItem("aiChatMessages");
+    return savedMessages ? JSON.parse(savedMessages) : [];
+  });
+
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  // const userId = "6690b520c3501fb2363cf995"; // Replace with actual user ID
-  const [suggestionPrompts, setSuggestionPrompts] = useState(
-    initialSuggestionPrompts
-  );
+  const [suggestionPrompts, setSuggestionPrompts] = useState(initialSuggestionPrompts);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem("aiChatMessages", JSON.stringify(messages));
+    scrollToBottom();
+  }, [messages]);
 
   const handleSend = async (message) => {
-    const newMessages = [...messages, { role: "user", content: message }];
-    setMessages(newMessages);
+    if (!message.trim()) return;
+
+    const newMessage = { role: "user", content: message, timestamp: new Date() };
+    setMessages([...messages, newMessage]);
     setLoading(true);
+    setInput("");
 
-    // Remove suggestion prompts once user starts communicating
+    setTimeout(() => {
+      const aiResponse = {
+        role: "assistant",
+        content: "This is an AI-generated response.",
+        timestamp: new Date(),
+      };
+      setMessages((prevMessages) => [...prevMessages, aiResponse]);
+      setLoading(false);
+    }, 1000);
+
+    // Clear suggestion prompts after sending a message
     setSuggestionPrompts([]);
-    // try {
-    //   const aiResponse = await sendMessage(userId, message);
-    //   setMessages((prevMessages) => [...prevMessages, { role: 'assistant', content: aiResponse }]);
-    // } catch (error) {
-    //   console.error('Error getting AI response:', error);
-    // } finally {
-    //   setLoading(false);
   };
-
-  // Clear the input field after sending the message
-  // setInput('');
-  // };
 
   const handleSuggestionClick = (prompt) => {
     handleSend(prompt);
   };
 
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    return `${date.getHours()}:${date.getMinutes()}`;
+  };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        backgroundColor: "white",
-        p: 2,
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: isMobile ? "column" : "row",
-          p: 2,
-          flexWrap: "wrap",
-          gap: 2,
-          alignItems: "center",
-          justifyContent: isMobile ? "center" : "flex-start",
-        }}
-      >
-        {suggestionPrompts.map((prompt, index) => (
-          <Paper
-            key={index}
-            sx={{
-              minWidth: "fit-content",
-              cursor: "pointer",
-              borderRadius: 4,
-              bgcolor: green[50],
-              color: "#000",
-              "&:hover": {
-                bgcolor: green[100],
-              },
-              marginRight: 2,
-              p: 1,
-            }}
-            onClick={() => handleSuggestionClick(prompt)}
-          >
-            <Typography variant="body1">{prompt}</Typography>
-          </Paper>
-        ))}
-      </Box>
-      <Box
-        sx={{
-          flexGrow: 1,
-          p: 2,
-          overflow: "auto",
-          backgroundColor: "white",
-          borderRadius: 2,
-          boxShadow: 3,
-        }}
-      >
-        <List>
-          {messages.map((message, index) => (
-            <ListItem
-              key={index}
-              sx={{
-                justifyContent:
-                  message.role === "user" ? "flex-end" : "flex-start",
-              }}
-            >
-              <Paper
-                sx={{
-                  p: 1,
-                  bgcolor: message.role === "user" ? green[50] : grey[300],
-                  color:
-                    message.role === "user"
-                      ? theme.palette.text.primary
-                      : theme.palette.text.primary,
-                  borderRadius: 2,
-                }}
+    <div className="flex justify-center bg-[#f0f7f4]">
+      {/* Chat Container */}
+      <div className="w-full max-w-6xl max-h-[70vh] bg-[#ffffff] flex flex-col">
+        
+        {/* Header */}
+        <div className="bg-[#f0f7f4] py-4 px-6 flex justify-between items-center">
+          <h1 className="text-xl font-bold">AI CHAT</h1>
+        </div>
+
+        {/* Suggestion Prompts */}
+        {messages.length === 0 && (
+          <div className="flex flex-wrap gap-2 p-4 justify-center bg-[#f0f7f4]">
+            {suggestionPrompts.map((prompt, index) => (
+              <div
+                key={index}
+                className="cursor-pointer rounded-full bg-[#d7e9e3] hover:bg-[#b4d1c9] px-4 py-2 text-sm text-gray-800 shadow transition-transform transform hover:scale-105"
+                onClick={() => handleSuggestionClick(prompt)}
               >
-                {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown> */}
-              </Paper>
-            </ListItem>
+                {prompt}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Messages (Scrollable Chat Section) */}
+        <div className="flex-1 overflow-y-auto p-4 mb-4" style={{ height: "400px" }}>
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex mb-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+            >
+              <div
+                className={`max-w-xs p-3 rounded-lg shadow-md text-gray-800 text-sm ${
+                  message.role === "user" ? "bg-[#c2e0db]" : "bg-[#d9ece8]"
+                }`}
+              >
+                <div>{message.content}</div>
+                <div className="text-right text-xs mt-1 text-gray-500">
+                  {formatTime(message.timestamp)}
+                </div>
+              </div>
+            </div>
           ))}
           {loading && (
-            <ListItem sx={{ justifyContent: "flex-start" }}>
-              <Typography variant="body2" color="text.secondary">
-                AI is typing...
-              </Typography>
-            </ListItem>
+            <div className="flex justify-start">
+              <p className="text-sm text-gray-500">AI is typing...</p>
+            </div>
           )}
-        </List>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          p: 2,
-          bgcolor: grey[100],
-          borderRadius: 2,
-          mt: 2,
-          boxShadow: 3,
-        }}
-      >
-        <TextField
-          fullWidth
-          variant="outlined"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message..."
-          disabled={loading}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSend(input);
-            }
-          }}
-          sx={{
-            bgcolor: "white",
-            "& .MuiOutlinedInput-root": { borderRadius: 20 },
-            "& .MuiOutlinedInput-input": { color: theme.palette.primary.dark },
-          }}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleSend(input)}
-          disabled={loading || input.trim() === ""}
-          sx={{
-            bgcolor: green[50],
-            ml: 1,
-            borderRadius: 20,
-            "&:hover": { bgcolor: green[100] },
-          }}
-        >
-          <EmojiObjectsIcon sx={{ fontSize: 20, marginRight: 1 }} />
-          Send
-        </Button>
-      </Box>
-    </Box>
+          {/* Reference element to scroll into view when new messages are added */}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Field */}
+        <div className="flex items-center p-3 ">
+          <input
+            type="text"
+            className="flex-1 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#a7c4bc] bg-white"
+            placeholder="Type your message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={loading}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSend(input);
+              }
+            }}
+          />
+          <button
+            className="ml-2 text-white p-3 rounded-lg hover:bg-[#8cae9f] transition-colors disabled:bg-[#b4d1c9]"
+            onClick={() => handleSend(input)}
+            disabled={loading || input.trim() === ""}
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

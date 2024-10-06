@@ -1,13 +1,19 @@
 // import { useEffect, useState } from "react";
 import FeaturesCard from "../components/FeaturesCard";
 import logo from "../assets/coclinic.png"
+// import { unSetProfile } from "../features/user/userSlice";
+// import { useDispatch } from "react-redux";
 const Home = () => {
+  // const dispatch = useDispatch
   const handleLearnMoreClick = () => {
     const featuresSection = document.getElementById("features-section");
     if (featuresSection) {
       featuresSection.scrollIntoView({ behavior: "smooth" });
     }
   };
+  // const handleUnsetProfile = ()=>{
+  //   dispatch(unSetProfile())
+  // }
 
   return (
     <>
@@ -41,7 +47,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div id="features-section" className="relative z-10 mt-8">
+      <div  className="relative z-10 mt-8">
         <FeaturesCard />
         </div>
     </>

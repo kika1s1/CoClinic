@@ -1,7 +1,8 @@
+import Home from "../components/chat/HomeChat"
 
 const LiveChat = () => {
   return (
-    <div>LiveChat</div>
+    <Home/>
   )
 }
 

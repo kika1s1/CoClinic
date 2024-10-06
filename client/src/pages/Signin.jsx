@@ -17,7 +17,7 @@ const Signin = () => {
     e.preventDefault();
     dispatch(signInStart())
     try {
-      const res = await axios.post("/api/auth/signin", {
+      const res = await axios.post("/api/v1/auth/signin", {
         ...formData,
       });
       if (res.success == false) {
@@ -55,7 +55,7 @@ const Signin = () => {
         />
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-500"
         >
           {loading ? "Loading..." : "Signin"}
         </button>
