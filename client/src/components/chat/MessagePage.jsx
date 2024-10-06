@@ -130,7 +130,7 @@ const MessagePage = () => {
   // console.log("thisis checking",dataUser)
   return (
     <div className="w-full  bg-white ">
-      <header className="sticky top-0 h-16 bg-white flex justify-between items-center px-4">
+      <header className=" top-0 h-16 bg-white flex justify-between items-center px-4">
         <div className="flex items-center gap-4">
           <Link to="/livechat" className="lg:hidden">
             <FaAngleLeft size={25} />
@@ -158,7 +158,7 @@ const MessagePage = () => {
         </div>
       </header>
 
-      <section className="h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-80">
+      <section className="h-5/6 overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-50 bg-opacity-80">
         <div className="flex flex-col gap-2 py-2 mx-2" ref={currentMessage}>
           {allMessage.map((msg, index) => (
             <div key={index} className={`p-1 py-1 rounded w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${user._id === msg?.msgByUserId ? "ml-auto bg-teal-100" : "bg-white"}`}>
