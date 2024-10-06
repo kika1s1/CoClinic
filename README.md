@@ -2,6 +2,23 @@
   **CoClinic** is an innovative telehealth platform designed to provide seamless healthcare services through live consultations and interactive AI support.
   The platform focuses on enhancing the patient experience by offering multiple avenues for interaction, including direct communication with doctors and AI-based chatbots for preliminary consultations.
 
+## Home
+<img src="uploads/homepage.png"/>
+
+
+## Support
+<img src="uploads/support.png"/>
+
+## Upcoming
+<img src="uploads/upcoming.png"/>
+
+## Live Chat
+<img src="uploads/livechat.png"/>
+
+## AI Chat
+<img src="uploads/aichat.png"/>
+
+
 
 ## Features that must implemented 
 
@@ -46,6 +63,10 @@
 - **Cloud Services**: Google Cloud Platform (GCP)
 - **Authentication**: JWT-based authentication
 - **Deployment**: GCP services like Cloud Functions, Cloud Scheduler, and GCS
+
+
+
+
 
 
 
