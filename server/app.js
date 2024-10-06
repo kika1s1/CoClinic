@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/connectDB.js";
 
 import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/user.js";
 
 import {server, app} from './socket/index.js'
 import errorHandler from "./middleware/errorHandler.js";
@@ -41,7 +42,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Endpoint for uploading files
-app.post('/api/upload', upload.single('file'), (req, res) => {
+app.post('/api/v1/upload', upload.single('file'), (req, res) => {
   try {
     res.status(200).json({ url: `http://localhost:3000/uploads/${req.file.filename}` });
   } catch (error) {
@@ -56,6 +57,7 @@ const __dirname = path.dirname(__filename);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 app.use(errorHandler);
 
 server.listen(PORT, () => {

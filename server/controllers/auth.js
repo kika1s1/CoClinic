@@ -5,12 +5,12 @@ import User from "../models/User.js";
 import ErrorResponse from "../utils/errorResponse.js";
 dotenv.config();
 export const signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
-  if (!(username && email && password)) {
+  const { username,age, name, email, password } = req.body;
+  if (!(username && email && password && age&& name)) {
     return next(new ErrorResponse("All fields are required.", 400));
   }
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = new User({ username, email, password: hashedPassword });
+  const newUser = new User({ username,name,age, email, password: hashedPassword });
   try {
     const userEmail = await User.findOne({ email });
     const userUsername = await User.findOne({ username });
