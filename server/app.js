@@ -11,7 +11,8 @@ import connectDB from "./config/connectDB.js";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
-
+import bookRoutes from "./routes/book.js";
+import commentRoutes from "./routes/comment.js";
 import {server, app} from './socket/index.js'
 import errorHandler from "./middleware/errorHandler.js";
 dotenv.config();
@@ -58,6 +59,8 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/books", bookRoutes);
+app.use("/api/v1/comments", commentRoutes);
 app.use(errorHandler);
 
 server.listen(PORT, () => {
