@@ -7,6 +7,7 @@
 - [Upcoming](#upcoming)
 - [Live Chat](#live-chat)
 - [AI Chat](#ai-chat)
+- [AI Chat](#ai-chat-1)
 - [Features that must implemented](#features-that-must-implemented)
 - [Features that  implemented if time permit](#features-that--implemented-if-time-permit)
 - [Tech Stack](#tech-stack)
@@ -39,6 +40,9 @@
 ## AI Chat
 <img src="uploads/aichat.png"/>
 
+## AI Chat
+<img src="uploads/dashboard.png"/>
+
 
 
 ## Features that must implemented 
@@ -52,18 +56,16 @@
   - Patients can interact with an AI chatbot for initial triage and symptom analysis.
   - The chatbot can answer common health-related questions and recommend whether a patient should consult a doctor.
 
-- **Appointment Scheduling & Management**:
-  - Patients can schedule in-person or virtual appointments based on doctor availability.
-  - Doctors can manage their schedules, view upcoming appointments, and send reminders.
+
 
 - **Online Consultations (chat)**:
   - Secure live chat for comprehensive consultations.
 
+- **Admin Dashboard**:
+  - Admins can monitor user activity, manage user role
 
 
 ## Features that  implemented if time permit 
-- **Admin Dashboard**:
-  - Admins can monitor user activity, manage user roles, and generate platform reports.
 - **Billing and Payment Integration**:
   - Patients can view their bills, make payments, and download invoices.
   - Integrated payment gateway for seamless transactions.
@@ -75,6 +77,9 @@
   - Integrated with a third-party video service  (Zoom API).
 - **Digital Prescriptions**:
   - Doctors can issue digital prescriptions that patients can download or view within the platform.
+- **Appointment Scheduling & Management**:
+  - Patients can schedule in-person or virtual appointments based on doctor availability.
+  - Doctors can manage their schedules, view upcoming appointments, and send reminders.
 
 
 ## Tech Stack
