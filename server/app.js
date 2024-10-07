@@ -13,6 +13,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import bookRoutes from "./routes/book.js";
 import commentRoutes from "./routes/comment.js";
+import aiChatRoutes from "./routes/aichat.js";
 import {server, app} from './socket/index.js'
 import errorHandler from "./middleware/errorHandler.js";
 dotenv.config();
@@ -61,6 +62,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/books", bookRoutes);
 app.use("/api/v1/comments", commentRoutes);
+app.use("/api/v1/aichats", aiChatRoutes);
 app.use(errorHandler);
 
 server.listen(PORT, () => {
