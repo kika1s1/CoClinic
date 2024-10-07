@@ -29,6 +29,7 @@ const Profile = () => {
   };
 
   const handleSubmit = async (e) => {
+    
     dispatch(updateUserStart())
     e.preventDefault();
     const formData = new FormData();
@@ -41,7 +42,7 @@ const Profile = () => {
     }
 
     try {
-      const res = await axios.post("/api/v1/user/update/"+currentUser._id, formData, {
+      const res = await axios.post("/api/v1/users/update/"+currentUser._id, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
@@ -56,9 +57,12 @@ const Profile = () => {
       } else {
         dispatch(updateUserFailure(res.data.error || "Update failed."))
         setSuccess(null)
+      
+
         
       }
     } catch (error) {
+      console.log(error)
 
       dispatch(updateUserFailure(error.response?.data?.error || error.message || "Update failed."))
       setSuccess(null)

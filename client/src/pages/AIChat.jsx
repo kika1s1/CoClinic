@@ -14,7 +14,9 @@ const AIChat = () => {
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [suggestionPrompts, setSuggestionPrompts] = useState(initialSuggestionPrompts);
+  const [suggestionPrompts, setSuggestionPrompts] = useState(
+    initialSuggestionPrompts
+  );
 
   const messagesEndRef = useRef(null);
 
@@ -26,23 +28,56 @@ const AIChat = () => {
   const handleSend = async (message) => {
     if (!message.trim()) return;
 
-    const newMessage = { role: "user", content: message, timestamp: new Date() };
+    const newMessage = {
+      role: "user",
+      content: message,
+      timestamp: new Date(),
+    };
     setMessages([...messages, newMessage]);
     setLoading(true);
     setInput("");
 
-    setTimeout(() => {
-      const aiResponse = {
+    try {
+      // Fetch AI response from Gemini API
+      const aiResponse = await fetchGeminiResponse(message);
+
+      // Add the AI response to the chat messages
+      const newAiMessage = {
         role: "assistant",
-        content: "This is an AI-generated response.",
+        content: aiResponse,
         timestamp: new Date(),
       };
-      setMessages((prevMessages) => [...prevMessages, aiResponse]);
+      setMessages((prevMessages) => [...prevMessages, newAiMessage]);
+    } catch (error) {
+      console.log(error)
+      // console.error("Failed to fetch AI response:", error);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
 
     // Clear suggestion prompts after sending a message
     setSuggestionPrompts([]);
+  };
+
+  // Replace the fetchGeminiResponse function
+  const fetchGeminiResponse = async (message) => {
+    const response = await fetch("/api/v1/aichats/aichat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }), // Send message as payload
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to get response from backend: ${response.statusText}`
+      );
+    }
+
+    const data = await response.json();
+    console.log("Backend Response:", data); // Log the backend response
+    return data.aiResponse; // Return the modified AI response from the backend
   };
 
   const handleSuggestionClick = (prompt) => {
@@ -64,7 +99,6 @@ const AIChat = () => {
     <div className="flex justify-center bg-[#f0f7f4]">
       {/* Chat Container */}
       <div className="w-full max-w-6xl max-h-[70vh] bg-[#ffffff] flex flex-col">
-        
         {/* Header */}
         <div className="bg-[#f0f7f4] py-4 px-6 flex justify-between items-center">
           <h1 className="text-xl font-bold">AI CHAT</h1>
@@ -86,11 +120,16 @@ const AIChat = () => {
         )}
 
         {/* Messages (Scrollable Chat Section) */}
-        <div className="flex-1 overflow-y-auto p-4 mb-4" style={{ height: "400px" }}>
+        <div
+          className="flex-1 overflow-y-auto p-4 mb-4"
+          style={{ height: "400px" }}
+        >
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex mb-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex mb-3 ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
             >
               <div
                 className={`max-w-xs p-3 rounded-lg shadow-md text-gray-800 text-sm ${
