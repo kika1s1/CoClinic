@@ -8,7 +8,7 @@ const Header = () => {
 
   const dispatch = useDispatch()
   const { currentUser } = useSelector((state) => state.user);
-  // console.log(currentUser)
+  console.log(currentUser)
   const {profile} = useSelector((state)=>state.user)
   const handleProfile = () => {
     dispatch(setAndUnSetProfile())
@@ -121,7 +121,7 @@ const Header = () => {
                   className="block px-4 py-2 text-sm text-gray-700"
                   onClick={handleProfile}
                 >
-                  {currentUser.username}
+                  {currentUser.isDoctor? "Dr. "+currentUser.username :"Pa" + currentUser.username}
                   <span className="block text-sm   text-gray-500 truncate dark:text-gray-400">
                     {currentUser.email}
                   </span>

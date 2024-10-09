@@ -3,6 +3,7 @@ import ErrorResponse from "../utils/errorResponse.js";
 dotenv.config();
 
 export const aiChat = async (req, res, next) => {
+  const personalMesssage = "Give me General advice on how to solve my problem and tell me what measure i should take to prevent it from happening again do i need to talk to doctor or take any medication";
   const { message } = req.body;
 
   if (!message) {
@@ -13,7 +14,7 @@ export const aiChat = async (req, res, next) => {
   const payload = {
     contents: [
       {
-        parts: [{ text: message }],
+        parts: [{ text: personalMesssage + " " +message }],
       },
     ],
   };
