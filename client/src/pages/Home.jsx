@@ -31,7 +31,7 @@ const Home = () => {
             <div className="mt-6 flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-4">
               <button
                 className="bg-sky-400 text-black font-semibold py-2 px-6 rounded w-full md:w-auto hover:bg-sky-500"
-                onClick={() => (window.location.href = "/login")} // Redirect using JavaScript
+                onClick={() => (window.location.href = "/signup")} // Redirect using JavaScript
               >
                 Get Started
               </button>

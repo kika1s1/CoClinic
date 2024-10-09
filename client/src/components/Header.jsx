@@ -27,6 +27,7 @@ const Header = () => {
         return;
       }
       dispatch(deleteUserSuccess(data.data));
+      localStorage.removeItem("aiChatMessages")
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
