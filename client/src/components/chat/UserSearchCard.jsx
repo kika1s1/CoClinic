@@ -12,11 +12,12 @@ const UserSearchCard = ({user, onClose}) => {
                 name={user?.username}
                 userId={user?._id}
                 imageUrl={user?.avatar}
+                
             />
         </div>
         <div>
             <div className='font-semibold text-ellipsis line-clamp-1'>
-                {user?.username}
+                {user?.isDoctor? "Dr. "+ user?.username : "Pa "+ user?.username}
             </div>
             <div className='text-sm text-ellipsis line-clamp-1'>{user?.email}</div>
         </div>

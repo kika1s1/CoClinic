@@ -22,7 +22,8 @@ const MessagePage = () => {
     email: "",
     avatar: "",
     online: false,
-    _id: ""
+    _id: "",
+    isDoctor: false
   });
   const [openImageVideoUpload, setOpenImageVideoUpload] = useState(false);
   const [message, setMessage] = useState({
@@ -145,7 +146,8 @@ const MessagePage = () => {
             />
           </div>
           <div>
-            <h3 className="font-semibold text-lg my-0 text-ellipsis line-clamp-1">{dataUser?.username}</h3>
+            <h3 className="font-semibold text-lg my-0 text-ellipsis line-clamp-1">{dataUser?.isDoctor ? "Dr.":"Patient "}{dataUser?.username}</h3>
+            {console.log(dataUser)}
             <p className="-my-2 text-sm">
               {dataUser.online ? <span className="text-primary">online</span> : <span className="text-slate-400">offline</span>}
             </p>
