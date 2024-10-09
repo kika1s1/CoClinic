@@ -3,7 +3,7 @@ import ErrorResponse from "../utils/errorResponse.js";
 dotenv.config();
 
 export const aiChat = async (req, res, next) => {
-  const personalMesssage = "Give me General advice on how to solve my problem and tell me what measure i should take to prevent it from happening again do i need to talk to doctor or take any medication";
+  const personalMesssage = "Give me General advice and tell me what measure i should take to prevent it from happening again do i need to talk to doctor or take any medication I know you are not a doctor but i need your help to get me through this situation please help me out with this";
   const { message } = req.body;
 
   if (!message) {
